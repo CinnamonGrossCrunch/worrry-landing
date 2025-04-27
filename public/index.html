@@ -77,13 +77,15 @@
 
   .fade-out-other {
     opacity: 0;
-    transition: opacity 1s ease-out;
+    transition: opacity 1.5s ease-out;
   }
 
   .label {
     color: white;
-    font-size: 2.5rem;
-    padding: 1.5rem 3rem;
+    font-size: 1.5rem;
+    font-family: ui-rounded, sans-serif;
+    font-weight: bold;  
+    padding: .01rem 2rem;
     border-radius: 12px;
     transition: width 1s ease-out, height 0.5s ease-in, border-radius 1s ease-out, opacity 0.5s ease-out;
     z-index: 5;
@@ -91,19 +93,34 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    width: 300px;
-    height: 120px;
+    width: 350px;
+    height: 100px;
     max-width: 90%;
   }
 
   #left-label {
     background: rgba(204, 238, 255, 0.8);
     color: black;
+    border: .1px solid rgba(238, 238, 238, 0.308);
+    box-shadow: 0 0 24px 4px rgba(255, 255, 128, 0.25), 0 4px 24px 0 rgba(0,0,0,0.25);
+    transition: box-shadow 0.3s, border 0.2s;
   }
 
   #right-label {
     background: rgba(26, 10, 0, 0.8);
     color: white;
+    
+    border: .05px solid rgba(238, 238, 238, 0.308);
+    box-shadow: 0 0 24px 4px rgba(255, 255, 128, 0.25), 0 4px 24px 0 rgba(0,0,0,0.25);
+  transition: box-shadow 0.3s, border 0.20s;
+  }
+  #right-label:hover {
+    border: 2px solid #ffef5c;
+    box-shadow: 0 0 32px 8px #ffbe44, 0 4px 24px 0 rgba(0,0,0,0.25);
+  }
+  #left-label:hover {
+    border: 2px solid #a3ffe8;
+    box-shadow: 0 0 32px 8px #3dc8ff, 0 4px 24px 0 rgba(0,0,0,0.25);
   }
 
   .label-expand-width {
@@ -180,12 +197,12 @@
   <div class="container" id="container">
     <div class="side left" id="left" onclick="choose('left')">
       <div class="label" id="left-label">
-        <span class="label-text" id="left-text">Optimism</span>
+        <span class="label-text" id="left-text">This is no time to panic.</span>
       </div>
     </div>
     <div class="side right" id="right" onclick="choose('right')">
       <div class="label" id="right-label">
-        <span class="label-text" id="right-text">Panic</span>
+        <span class="label-text" id="right-text">This is the perfect time to panic.</span>
       </div>
     </div>
   </div>
