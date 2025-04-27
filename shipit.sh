@@ -11,5 +11,7 @@ git commit -m "🚀 Ship It #$(date +%s)"
 # Push to GitHub
 git push origin main
 
-echo "✅ Changes shipped! Check Vercel for deployment..."
-echo "🚀 Deployment in progress..."
+# Open your live site (adjust URL if needed)
+sleep 2
+echo "✅ Changes shipped! Opening worrry.com..."
+start https://worrry.com
