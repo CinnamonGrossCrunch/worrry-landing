@@ -26,7 +26,7 @@
         "permanent": true
       },
       {
-        "source": "http://worrry.com/:path*",
+        "source": "/:path*",
         "destination": "https://worrry.com/:path*",
         "permanent": true
       }
