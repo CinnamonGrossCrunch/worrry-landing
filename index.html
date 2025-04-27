@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Path</title>
+
+<!-- Favicon and app icons -->
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/favicon.png" type="image/png">
+<link rel="manifest" href="/manifest.json">
+
+<!-- Preconnect to destination sites -->
+<link rel="preconnect" href="https://perfecttimetopanic.com/" crossorigin="anonymous">
+<link rel="preconnect" href="https://notimetopanic.com/" crossorigin="anonymous">
+
+<style>
+ #fade-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 998;
+  pointer-events: none;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: sans-serif;
+    background: black;
+  }
+
+  .container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .container-collapse {
+    display: block;
+  }
+
+  .side {
+    flex: 1;
+    background-size: cover;
+    background-position: center left;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 1s ease-in-out;
+  }
+
+  .expand-width {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    transition: width 1s ease-out;
+    z-index: 2;
+  }
+
+  .expand-width-full {
+  width: 101%;
+}
+
+  .fade-out-other {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+  }
+
+  .label {
+    color: white;
+    font-size: 2.5rem;
+    padding: 1.5rem 3rem;
+    border-radius: 12px;
+    transition: width 1s ease-out, height 0.5s ease-in, border-radius 1s ease-out, opacity 0.5s ease-out;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 300px;
+    height: 120px;
+    max-width: 90%;
+  }
+
+  #left-label {
+    background: rgba(204, 238, 255, 0.8);
+    color: black;
+  }
+
+  #right-label {
+    background: rgba(26, 10, 0, 0.8);
+    color: white;
+  }
+
+  .label-expand-width {
+  width: 110%;
+  transform: translateX(-5%);
+    border-radius: 0;
+  }
+
+  .label-expand-height {
+    height: 100vh;
+  }
+
+  .label-text {
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .text-fade {
+    opacity: 0;
+  }
+
+  .left::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url('/HSE.jpg');
+  background-color: #000033;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top left;
+  transform: scaleX(-1);
+  z-index: 1;
+}
+
+.left { 
+  position: relative;
+  background: none;
+  
+  }
+
+  .right {
+    background-color: #1a0a00;
+    background-image: url('/PTTP2.jpg');
+  }
+
+  .spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    border: 6px solid transparent;
+    border-top: 6px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 999;
+  }
+
+  @keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+</style>
+</head>
+
+<body>
+  <div id="fade-overlay"></div>
+  <div class="spinner" id="spinner"></div>
+
+  <div class="container" id="container">
+    <div class="side left" id="left" onclick="choose('left')">
+      <div class="label" id="left-label">
+        <span class="label-text" id="left-text">Optimism</span>
+      </div>
+    </div>
+    <div class="side right" id="right" onclick="choose('right')">
+      <div class="label" id="right-label">
+        <span class="label-text" id="right-text">Panic</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function choose(side) {
+      const container = document.getElementById('container');
+      const left = document.getElementById('left');
+      const right = document.getElementById('right');
+      const leftLabel = document.getElementById('left-label');
+      const rightLabel = document.getElementById('right-label');
+      const leftText = document.getElementById('left-text');
+      const rightText = document.getElementById('right-text');
+      const spinner = document.getElementById('spinner');
+
+      container.classList.add('container-collapse');
+      spinner.style.display = 'block';
+      const fadeOverlay = document.getElementById('fade-overlay');
+
+      let chosenSide, otherSide, chosenLabel, chosenText;
+      if (side === 'left') {
+        chosenSide = left;
+        otherSide = right;
+        chosenLabel = leftLabel;
+        chosenText = leftText;
+        chosenSide.style.left = '0';
+        chosenSide.style.right = 'auto';
+        otherSide.style.right = '0';
+        otherSide.style.left = 'auto';
+      } else {
+        chosenSide = right;
+        otherSide = left;
+        chosenLabel = rightLabel;
+        chosenText = rightText;
+        chosenSide.style.right = '0';
+        chosenSide.style.left = 'auto';
+        otherSide.style.left = '0';
+        otherSide.style.right = 'auto';
+      }
+
+      otherSide.style.position = 'absolute';
+      otherSide.style.top = '0';
+      otherSide.style.bottom = '0';
+      otherSide.style.width = '50%';
+      otherSide.style.height = '100%';
+
+      chosenSide.classList.add('expand-width');
+      chosenSide.style.backgroundSize = 'cover';
+      if (side === 'left') {
+        chosenSide.style.backgroundPosition = 'top right';
+      } else {
+        chosenSide.style.backgroundPosition = 'top left';
+      }
+      chosenText.classList.add('text-fade');
+      otherSide.classList.add('fade-out-other');
+
+      setTimeout(() => {
+        if (side === 'left') {
+          chosenSide.style.left = '0';
+          chosenSide.style.right = 'auto';
+        } else {
+          chosenSide.style.right = '0';
+          chosenSide.style.left = 'auto';
+        }
+        chosenSide.style.width = '110%';
+        chosenSide.classList.add('expand-width-full');
+        chosenLabel.style.width = '110%';
+        if (side === 'left') {
+          chosenLabel.style.transform = 'translateX(-5%)';
+        } else {
+          chosenLabel.style.transform = 'translateX(5%)';
+        }
+        chosenLabel.classList.add('label-expand-width');
+      }, 50);
+
+      setTimeout(() => {
+        chosenLabel.classList.add('label-expand-height');
+      }, 800);
+
+      setTimeout(() => {
+        fadeOverlay.style.opacity = '1';
+      }, 900);
+
+      setTimeout(() => {
+        spinner.style.display = 'none';
+        if (side === 'left') {
+  window.location.href = 'https://notimetopanic.com?ref=fork';
+} else {
+  window.location.href = 'https://perfecttimetopanic.com?ref=fork';
+}
+      }, 2300);
+    }
+  window.addEventListener('pageshow', function(event) {
+  if (event.persisted) {
+    window.location.reload();
+  }
+});
+</script>
+</body>
+</html>
