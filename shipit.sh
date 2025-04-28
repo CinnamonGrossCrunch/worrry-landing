@@ -11,7 +11,7 @@ git commit -m "🚀 Ship It #$(date +%s)"
 # Push to GitHub
 git push origin main
 
-# Open your live site (adjust URL if needed)
+# Open your live site
 sleep 2
 echo "✅ Changes shipped! Opening worrry.com..."
 start https://worrry.com
