@@ -6,7 +6,7 @@
 git add .
 
 # Commit with a timestamp
-git commit -m "🚀 Ship It #$(date +%s)"
+git commit -m "🚀 Ship It #$(date+time)"
 
 # Push to GitHub
 git push origin main
